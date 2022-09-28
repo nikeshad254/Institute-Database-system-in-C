@@ -1,7 +1,6 @@
 // declaring all libaries we may need through out files
 #include<stdio.h>
 #include<string.h>
-#include<conio.h>
 #include <stdlib.h>
 
 #ifdef _WIN32
