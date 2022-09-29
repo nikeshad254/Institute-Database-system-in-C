@@ -19,6 +19,7 @@ struct institute{
 // for student
 struct student{
 	int stu_id;
+	char pwd[20];
 	int roll_no;
 	char fname[20];
 	char lname[20];
