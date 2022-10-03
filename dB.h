@@ -7,7 +7,37 @@ char admin_code[] = "admin_code.txt";
 char c_data[] = "all_dbs/c_datas/";
 
 //function declarartion
+int data_count(char file_name[]);
 int fetch_passcode();
+int create_institute(char name[], char pass[]);
+void fetch_institute(struct institute *arr);
+
+
+
+// counts number of data from any file
+int data_count(char file_name[]){		//working
+	char name[300];
+	strcpy(name,db);
+//	char name[]= "all_dbs\\";
+	strcat(name,file_name);
+	FILE *fp;
+	fp = fopen(name,"r");
+	if(fp == NULL){
+		printf("error occured file not found!");
+		exit(0);
+	}
+	char ch;
+	int i=0;
+	ch = fgetc(fp);
+	while(!feof(fp)){
+		ch = fgetc(fp);
+		if(ch == '\n'){
+			i++;
+		}
+	}
+	fclose(fp);
+	return i;
+}
 
 
 int fetch_passcode(){
@@ -26,3 +56,58 @@ int fetch_passcode(){
 	fclose(fp);
 	return pass;
 }
+
+
+int create_institute(char name[], char pass[]){
+	int id, data_no;
+	
+	//this code is imp for fetching infos
+	data_no = data_count("institutes.txt");
+	struct institute insta[data_no];
+	fetch_institute(insta);
+//testing=>	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[3].name);
+	
+	FILE *fp;
+	
+	char path[300];
+	strcpy(path,db);
+	strcat(path,inst_file);		
+	fp = fopen(path,"a");
+	
+	id = data_no - 1;
+	id = insta[id].inst_id + 2;
+	
+	fprintf(fp,"%d %s %s\n", id, name, pass);
+	
+	fclose(fp);
+	
+	return id;
+	
+}
+
+//fetch all institute data
+void fetch_institute(struct institute *arr){ 	//completed working pass array of struct name , while array should be formed using function!
+	int data_no,i;	
+	data_no = data_count("institutes.txt");
+	FILE *fp;
+	
+	char path[300];
+	strcpy(path,db);
+	strcat(path,inst_file);
+	
+	fp = fopen(path,"r");
+	if(fp == NULL){
+		printf("error occured file not found!");
+		exit(0);
+	}
+	
+	
+	for(i=0; i<data_no; i++){
+		fscanf(fp, "%d %s %s\n", &arr->inst_id, arr->name, arr->pass);
+		arr++;
+	}
+	fclose(fp);
+}
+
+
+

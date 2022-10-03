@@ -6,6 +6,8 @@ void main(){
 	int opt, chance;			//options declarations
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
+	struct institute temp;			//temporary data holder of institute
+	
 	do{
 		printf("\tWelcome to Institute Database\n...............................................\n");
 		printf("Who are you?\n1. User\n2. Admin\n3. Exit\n===> ");
@@ -45,15 +47,22 @@ void main(){
 				
 				do{
 					printf("\tWelcome to admin panel\n....................................\n");
-					printf("Choose task to perform: \n\t1. Access Institute\n\t2. Create Institute\n\t3. Delete Institute\n\t4. Exit \n===> ");
+					printf("Choose task to perform: \n\t1. Create Institute\n\t2. Access Institute\n\t3. Delete Institute\n\t4. Exit \n===> ");
 					scanf("%d",&opt);
 					switch(opt){
 						case 1:
-							// acess
+							// create
+							printf("\n please give your company first name\n===> ");
+							scanf("%s",temp.name);
+							
+							printf("\n provide a strong password(no space)\n===> ");
+							scanf("%s",temp.pass);
+							
+							temp.inst_id = 0;
 						break;
 						
 						case 2:
-							//create
+							//access
 						break;
 						
 						case 3:
