@@ -9,6 +9,8 @@ void main(){
 	struct institute temp;			//temporary data holder of institute
 	
 	do{
+		Sleep(500);
+		system("cls");
 		printf("\tWelcome to Institute Database\n...............................................\n");
 		printf("Who are you?\n1. User\n2. Admin\n3. Exit\n===> ");
 		scanf("%d",&opt);
@@ -27,7 +29,7 @@ void main(){
 					
 					if(prov_pass==admin_pass){
 						
-						printf("admin login sucessfull!!");
+						printf("admin login sucessfull!!\n");
 						break;	//ends password loop!!
 						
 					}else{
@@ -41,11 +43,13 @@ void main(){
 						}
 					}
 					
-				}while(true);
+				}while(chance<=3);
 				
 				// only runs if passcode is verified as admin
 				
 				do{
+					Sleep(1000);
+					system("cls");
 					printf("\tWelcome to admin panel\n....................................\n");
 					printf("Choose task to perform: \n\t1. Create Institute\n\t2. Access Institute\n\t3. Delete Institute\n\t4. Exit \n===> ");
 					scanf("%d",&opt);
@@ -58,7 +62,10 @@ void main(){
 							printf("\n provide a strong password(no space)\n===> ");
 							scanf("%s",temp.pass);
 							
-							temp.inst_id = 0;
+							temp.inst_id = create_institute(temp.name, temp.pass);
+							Sleep(500);
+							printf("\ndon't forget , \nyour company id is ==>  %d", temp.inst_id);
+							Sleep(2000);
 						break;
 						
 						case 2:
@@ -72,7 +79,7 @@ void main(){
 						case 4:
 							//exit
 							printf("\nexiting now....");
-							Sleep(2000);
+							Sleep(500);
 							exit(0);
 						break;
 						
@@ -100,7 +107,6 @@ void main(){
 			default:	//invalid input
 				printf("this is a invalid input!! try again\n");
 				Sleep(500);
-				system("cls");
 			
 		}
 	}while(opt!=3);
