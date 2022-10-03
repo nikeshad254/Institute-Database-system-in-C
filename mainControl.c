@@ -1,5 +1,7 @@
 #include "dB.h"
 
+
+
 void main(){
 	int opt, chance;			//options declarations
 	int i, j;			// loop vars			
@@ -37,8 +39,43 @@ void main(){
 						}
 					}
 					
+				}while(true);
+				
+				// only runs if passcode is verified as admin
+				
+				do{
+					printf("\tWelcome to admin panel\n....................................\n");
+					printf("Choose task to perform: \n\t1. Access Institute\n\t2. Create Institute\n\t3. Delete Institute\n\t4. Exit \n===> ");
+					scanf("%d",&opt);
+					switch(opt){
+						case 1:
+							// acess
+						break;
+						
+						case 2:
+							//create
+						break;
+						
+						case 3:
+							//delete
+						break;
+						
+						case 4:
+							//exit
+							printf("\nexiting now....");
+							Sleep(2000);
+							exit(0);
+						break;
+						
+						default:
+							printf("this is a invalid input!! try again\n");
+							Sleep(500);
+							system("cls");
+							
+					}
 					
-				}while(chance<=3);
+				}while(opt!=4);
+				
 				
 				
 				
@@ -55,7 +92,7 @@ void main(){
 				printf("this is a invalid input!! try again\n");
 				Sleep(500);
 				system("cls");
-				continue;
+			
 		}
 	}while(opt!=3);
 	
