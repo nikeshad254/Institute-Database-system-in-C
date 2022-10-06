@@ -9,6 +9,9 @@
 #include <unistd.h>
 #endif
 
+int true = 1;
+int false = 0;
+
 // structure template
 // for institute
 struct institute{

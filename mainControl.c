@@ -55,7 +55,7 @@ void main(){
 					scanf("%d",&opt);
 					switch(opt){
 						case 1:
-							// create
+							// create company
 							printf("\n please give your company first name\n===> ");
 							scanf("%s",temp.name);
 							
@@ -73,11 +73,45 @@ void main(){
 						break;
 						
 						case 3:
-							//delete
+							//delete company
+							printf("Provide company id to delete => ");
+							scanf("%d",&temp.inst_id);
+							printf("Password => ");
+							scanf("%s",temp.pass);
+							
+							int reasult = 1 ;
+							if(reasult == true){
+								
+								do{
+									system("cls");
+									printf("Are you sure to delete?\n 1. Yes \t 2. No\n==> ");
+									scanf("%d",&opt);
+									
+									if(opt == 1){
+										// delete function
+										printf("\ndeletion sucessfull!!\n");
+										break;
+									}
+									else if(opt == 2){
+										printf("\ndeletion failed!! \n");
+									}
+									else{
+										printf("\ninvalid response!!\t try again!!!!!!\n");
+										Sleep(500);
+									}
+									
+								}while(opt!=2);
+								
+								
+							}else{
+								printf("\nid or password invalid!!\n");
+								Sleep(500);
+							}
+							
 						break;
 						
 						case 4:
-							//exit
+							//exit company
 							printf("\nexiting now....");
 							Sleep(500);
 							exit(0);
