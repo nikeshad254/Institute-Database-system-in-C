@@ -79,8 +79,8 @@ void main(){
 							printf("Password => ");
 							scanf("%s",temp.pass);
 							
-//							int reasult = ; search function reaulting 1 if found 
-							if(reasult == true){
+							int result = check_institute(temp.inst_id, temp.pass);
+							if(result != 0){
 								
 								do{
 									system("cls");
@@ -88,12 +88,17 @@ void main(){
 									scanf("%d",&opt);
 									
 									if(opt == 1){
-										// delete function
-										printf("\ndeletion sucessfull!!\n");
+										result = delete_institute(temp.inst_id);
+										if(result == 1){
+											printf("\ndeletion sucessfull!!\n");
+										}
+										else{
+											printf("\nfailed to delete!!\n");
+										}
 										break;
 									}
 									else if(opt == 2){
-										printf("\ndeletion failed!! \n");
+										printf("\ndeletion cancelled!! \n");
 									}
 									else{
 										printf("\ninvalid response!!\t try again!!!!!!\n");

@@ -13,6 +13,7 @@ int fetch_passcode();
 int create_institute(char name[], char pass[]);
 void fetch_institute(struct institute *arr);
 int check_institute(int id, char pass[]);
+int delete_institute(int id);
 
 
 
@@ -135,5 +136,33 @@ int check_institute(int id, char pass[]){
 
 	}
 	return 0;
+}
+
+int delete_institute(int id){
+	
+	int data_no, i;
+	//this code is imp for fetching infos
+		
+	data_no = data_count(inst_file);
+	
+	struct institute insta[data_no];
+	fetch_institute(insta);
+	
+	char path[300];
+	strcpy(path,db);
+	strcat(path,inst_file);
+	
+	FILE *fp;
+	fp = fopen(path, "w");
+	
+	for( i=0; i<data_no; i++){
+		if(insta[i].inst_id != id){
+			//print
+			fprintf(fp,"%d %s %s\n", insta[i].inst_id, insta[i].name, insta[i].pass);
+		}
+	}
+	fclose(fp);
+	
+	return 1;
 }
 
