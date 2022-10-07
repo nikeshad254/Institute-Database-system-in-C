@@ -6,11 +6,13 @@ char inst_file[] = "institutes.txt";
 char admin_code[] = "admin_code.txt";
 char c_data[] = "all_dbs/c_datas/";
 
+
 //function declarartion
 int data_count(char file_name[]);
 int fetch_passcode();
 int create_institute(char name[], char pass[]);
 void fetch_institute(struct institute *arr);
+int check_institute(int id, char pass[]);
 
 
 
@@ -62,7 +64,7 @@ int create_institute(char name[], char pass[]){
 	int id, data_no;
 	
 	//this code is imp for fetching infos
-	data_no = data_count("institutes.txt");
+	data_no = data_count(inst_file);
 	struct institute insta[data_no];
 	fetch_institute(insta);
 //testing=>	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[3].name);
@@ -87,17 +89,20 @@ int create_institute(char name[], char pass[]){
 
 //fetch all institute data
 void fetch_institute(struct institute *arr){ 	//completed working pass array of struct name , while array should be formed using function!
-	int data_no,i;	
-	data_no = data_count("institutes.txt");
-	FILE *fp;
+	int data_no,i;
 	
 	char path[300];
 	strcpy(path,db);
-	strcat(path,inst_file);
+	strcat(path,inst_file);	
+	
+	FILE *fp;
+	
+	data_no = data_count(inst_file);
+	
 	
 	fp = fopen(path,"r");
 	if(fp == NULL){
-		printf("error occured file not found!");
+		printf("error occured file not found! - fetch institute");
 		exit(0);
 	}
 	
@@ -109,5 +114,26 @@ void fetch_institute(struct institute *arr){ 	//completed working pass array of 
 	fclose(fp);
 }
 
+int check_institute(int id, char pass[]){
+	
+	int data_no, i;
+	//this code is imp for fetching infos
+		
+	data_no = data_count(inst_file);
+	
+	struct institute insta[data_no];
+	fetch_institute(insta);
+//	testing=>	
+//	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[9].name);
 
+	for(i=0; i < data_no; i++){
+//		printf("%d %s %s \n",insta[i].inst_id, insta[i].name, insta[i].pass);
+		
+		if( insta[i].inst_id == id && strcmp(insta[i].pass, pass) == 0){
+			return i;
+		}
+
+	}
+	return 0;
+}
 

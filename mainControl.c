@@ -79,7 +79,7 @@ void main(){
 							printf("Password => ");
 							scanf("%s",temp.pass);
 							
-							int reasult = 1 ;
+//							int reasult = ; search function reaulting 1 if found 
 							if(reasult == true){
 								
 								do{
