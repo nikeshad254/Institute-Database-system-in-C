@@ -14,7 +14,7 @@ int create_institute(char name[], char pass[]);
 void fetch_institute(struct institute *arr);
 int check_institute(int id, char pass[]);
 int delete_institute(int id);
-
+void access_one_institute(struct institute *arr, int id);
 
 
 // counts number of data from any file
@@ -165,4 +165,29 @@ int delete_institute(int id){
 	
 	return 1;
 }
+
+void access_one_institute(struct institute *arr, int id){
+	
+	int i, data_no;
+	
+	data_no = data_count(inst_file);
+	struct institute insta[data_no];
+	fetch_institute(insta);
+	
+	for( i=0; i<data_no; i++){
+		if(insta[i].inst_id == id){
+			
+			arr->inst_id = insta[i].inst_id;
+			
+			strcpy(arr->name, insta[i].name);
+			strcpy(arr->pass, insta[i].pass);
+
+			return;
+		}
+	}
+	printf("error occured!!");
+	exit(0);
+}
+
+
 
