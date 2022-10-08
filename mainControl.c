@@ -69,11 +69,71 @@ void main(){
 						break;
 						
 						case 2:
-							//access
+							//access company
+							chance = 0;
+							do{
+								Sleep(500);
+								system("cls");
+								
+								printf("..................Accessing Company..................\n\n");
+								printf("Enter your company id ==> ");
+								scanf("%d",&temp.inst_id);
+								printf("Enter password ==> ");
+								scanf("%s",temp.pass);
+								
+								int result = check_institute(temp.inst_id, temp.pass);
+								
+								if(result != 0){	//access company validity
+
+									do{
+										Sleep(500);
+										system("cls");
+										printf("............Company %d............\n\n", temp.inst_id);
+										
+										printf("What do you want to do?\n1. Add Student Data\n2. Fetch Data\n3. View Latest Result\n4. Modify Data\n5. Exit\n====> ");
+										scanf("%d",&opt);
+										
+										switch(opt){
+											
+											case 1:
+												//add student data
+											break;
+											
+											case 2:
+												//fetch data
+											break;
+											
+											case 3:
+												//view latest result
+											break;
+											
+											case 4:
+												//modify data
+											break;
+											
+											case 5:
+												//exit
+											break;
+											
+										}
+										
+									}while(opt!=5);
+									
+								}
+								else{		//not valid password
+									printf("\n.....INVALID PASSWORD OR ID.....\n");
+									Sleep(500);
+									chance++;
+								}
+								
+							}while(chance<3);
+							
+							
 						break;
 						
 						case 3:
 							//delete company
+							system("cls");
 							printf("Provide company id to delete => ");
 							scanf("%d",&temp.inst_id);
 							printf("Password => ");
