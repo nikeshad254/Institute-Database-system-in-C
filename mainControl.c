@@ -1,12 +1,12 @@
 #include "dB.h"
 
 
-
 void main(){
 	int opt, chance;			//options declarations
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
 	struct institute temp;			//temporary data holder of institute
+	struct institute insta;			//data of one institute holder
 	
 	do{
 		Sleep(500);
@@ -84,11 +84,11 @@ void main(){
 								int result = check_institute(temp.inst_id, temp.pass);
 								
 								if(result != 0){	//access company validity
-
+									access_one_institute(&insta, temp.inst_id);
 									do{
 										Sleep(500);
 										system("cls");
-										printf("............Company %d............\n\n", temp.inst_id);
+										printf("............ %s Institute............\n\n", insta.name);
 										
 										printf("What do you want to do?\n1. Add Student Data\n2. Fetch Data\n3. View Latest Result\n4. Modify Data\n5. Exit\n====> ");
 										scanf("%d",&opt);
@@ -97,6 +97,9 @@ void main(){
 											
 											case 1:
 												//add student data
+												
+												
+												
 											break;
 											
 											case 2:

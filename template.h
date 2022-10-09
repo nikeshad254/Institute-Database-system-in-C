@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -9,6 +10,8 @@
 #include <unistd.h>
 #endif
 
+#define PERS 1001
+#define ACAD 1010
 
 // structure template
 // for institute

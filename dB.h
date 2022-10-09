@@ -15,6 +15,7 @@ void fetch_institute(struct institute *arr);
 int check_institute(int id, char pass[]);
 int delete_institute(int id);
 void access_one_institute(struct institute *arr, int id);
+void generate_name(int Co_id, int mode, char *gen_name );
 
 
 // counts number of data from any file
@@ -166,6 +167,7 @@ int delete_institute(int id){
 	return 1;
 }
 
+// access only one institute and provide gives reasult.
 void access_one_institute(struct institute *arr, int id){
 	
 	int i, data_no;
@@ -189,5 +191,35 @@ void access_one_institute(struct institute *arr, int id){
 	exit(0);
 }
 
+void generate_name(int Co_id, int mode, char *gen_name ){
+	
+	struct institute temp;
+	access_one_institute(&temp, Co_id);
+	
+	int count =0;
+	do{
+        count++;
+        Co_id /= 10;
+    } while(Co_id!= 0);
+    
+	char str[count];
+	sprintf(str, "%d", temp.inst_id);
+	
+	strcpy(gen_name, str);
+	strcat(gen_name, temp.name);
+	
+	if(mode == PERS){
+		strcat(gen_name, "pers");
+	}
+	else if(mode == ACAD){
+		strcat(gen_name, "acad");
+	}
+	strcat(gen_name, ".txt");
+	
+}
 
+
+void fetch_stupers(struct student *arr){
+	
+}
 
