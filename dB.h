@@ -17,7 +17,7 @@ int delete_institute(int id);
 void access_one_institute(struct institute *arr, int id);
 void generate_path(int Co_id, int mode, char *gen_path );
 void fetch_stupers(int Co_id, struct student *arr);
-void add_stupers(int Co_id, struct student arr);
+int add_stupers(int Co_id, struct student arr);
 
 
 // counts number of data from any file
@@ -251,17 +251,24 @@ void fetch_stupers(int Co_id, struct student *arr){
 	
 	
 }
-void add_stupers(int Co_id, struct student arr){
+int add_stupers(int Co_id, struct student arr){
 	FILE *fp;
 	char name[300], path[300];
-	int i;
+	int i, id;
 //	strcpy(path, db);
 	generate_path(Co_id, PERS, name);	
 	int data_no = data_count(name);
 	
+	struct student stu[data_no];
+	fetch_stupers(Co_id, stu);
+	
+	id = stu[data_no - 1].stu_id + 3;
+	arr.stu_id = id;
+	
 	strcpy(path,db);
 	strcat(path,name);
 	fp = fopen(path, "a");
+	
 	
 		
 	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
@@ -269,4 +276,6 @@ void add_stupers(int Co_id, struct student arr){
 	
 	fclose(fp); 
 	
+	
+	return id;
 }
