@@ -23,24 +23,24 @@ struct institute{
 // for student
 struct student{
 	int stu_id;
-	char pwd[20];
+	char pwd[50];
 	int roll_no;
-	char fname[20];
-	char lname[20];
+	char fname[50];
+	char lname[50];
 	int gender; // 1=male , 0=female ;;;
-	char dob[30];
-	int phone;
-	char email[40];
+	char dob[50];
+	char phone[13];
+	char email[50];
 	
 	// address info:
 	struct addres{
-		char per_prov[20];
-		char per_dist[20];
-		char per_street[20];
+		char per_prov[50];
+		char per_dist[50];
+		char per_street[50];
 		
-		char temp_prov[20];
-		char temp_dist[20];
-		char temp_street[20];
+		char temp_prov[50];
+		char temp_dist[50];
+		char temp_street[50];
 	}address;
 	
 };

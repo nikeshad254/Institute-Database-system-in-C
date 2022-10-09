@@ -4,7 +4,7 @@
 char db[] = "all_dbs/";
 char inst_file[] = "institutes.txt";
 char admin_code[] = "admin_code.txt";
-char c_data[] = "all_dbs/c_datas/";
+char c_data[] = "c_datas/";
 
 
 //function declarartion
@@ -15,7 +15,9 @@ void fetch_institute(struct institute *arr);
 int check_institute(int id, char pass[]);
 int delete_institute(int id);
 void access_one_institute(struct institute *arr, int id);
-void generate_name(int Co_id, int mode, char *gen_name );
+void generate_path(int Co_id, int mode, char *gen_path );
+void fetch_stupers(int Co_id, struct student *arr);
+void add_stupers(int Co_id, struct student arr);
 
 
 // counts number of data from any file
@@ -191,8 +193,8 @@ void access_one_institute(struct institute *arr, int id){
 	exit(0);
 }
 
-void generate_name(int Co_id, int mode, char *gen_name ){
-	
+void generate_path(int Co_id, int mode, char *gen_path ){
+	char gen_name[100];
 	struct institute temp;
 	access_one_institute(&temp, Co_id);
 	
@@ -216,10 +218,55 @@ void generate_name(int Co_id, int mode, char *gen_name ){
 	}
 	strcat(gen_name, ".txt");
 	
+	strcpy(gen_path, c_data);
+	strcat(gen_path, gen_name);
 }
 
 
-void fetch_stupers(struct student *arr){
+void fetch_stupers(int Co_id, struct student *arr){
+	char name[300], path[300];
+	int i;
+//	strcpy(path, db);
+	generate_path(128, PERS, name);	//need change
+	int data_no = data_count(name);
+	
+	strcpy(path,db);
+	strcat(path,name);
+	
+	FILE *fp;
+	fp = fopen(path, "r");
+	if(fp == NULL){
+		printf("error occured while opening file!!");
+		exit(0);
+	}
+	
+	for(i=0; i<data_no; i++){
+		printf("sucess here!\n\n");
+
+		fscanf(fp, "%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", &arr->stu_id, arr->pwd, &arr->roll_no, arr->fname, arr->lname, &arr->gender, arr->dob, arr->phone, arr->email, arr->address.per_prov, arr->address.per_dist, arr->address.per_street, arr->address.temp_prov, arr->address.temp_dist, arr->address.temp_street);
+		arr++;
+	}
+	
+	fclose(fp);
+	
 	
 }
-
+void add_stupers(int Co_id, struct student arr){
+	FILE *fp;
+	char name[300], path[300];
+	int i;
+//	strcpy(path, db);
+	generate_path(Co_id, PERS, name);	
+	int data_no = data_count(name);
+	
+	strcpy(path,db);
+	strcat(path,name);
+	fp = fopen(path, "a");
+	
+		
+	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
+	
+	
+	fclose(fp); 
+	
+}
