@@ -18,6 +18,7 @@ void access_one_institute(struct institute *arr, int id);
 void generate_path(int Co_id, int mode, char *gen_path );
 void fetch_stupers(int Co_id, struct student *arr);
 int add_stupers(int Co_id, struct student arr);
+void add_stuacad(int Co_id, struct result marks);
 
 
 // counts number of data from any file
@@ -227,7 +228,7 @@ void fetch_stupers(int Co_id, struct student *arr){
 	char name[300], path[300];
 	int i;
 //	strcpy(path, db);
-	generate_path(128, PERS, name);	//need change
+	generate_path(Co_id, PERS, name);
 	int data_no = data_count(name);
 	
 	strcpy(path,db);
@@ -274,8 +275,57 @@ int add_stupers(int Co_id, struct student arr){
 	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
 	
 	
-	fclose(fp); 
+	fclose(fp);
 	
 	
 	return id;
+}
+
+void fetch_stuacad(int Co_id, struct result *arr){
+	char name[300], path[300];
+	int i;
+//	strcpy(path, db);
+	generate_path(Co_id, ACAD, name);
+	int data_no = data_count(name);
+	
+	strcpy(path,db);
+	strcat(path,name);
+	
+	FILE *fp;
+	fp = fopen(path, "r");
+	
+	for(i=0; i<data_no; i++){
+		fscanf(fp, "%d %f %f %f %f %f %f\n" , &arr->stu_id, &arr->sub[0], &arr->sub[1], &arr->sub[2], &arr->sub[3], &arr->sub[4], &arr->per);
+		arr++;
+	}
+	
+	fclose(fp);
+	
+}
+
+
+void add_stuacad(int Co_id, struct result marks){
+	
+	//calculation
+	float total = marks.sub[0] + marks.sub[1] + marks.sub[2] + marks.sub[3] + marks.sub[4];
+	marks.per = total/5;
+	
+	char name[100], path[100];
+	generate_path(Co_id, ACAD, name);	
+	
+	strcpy(path,db);
+	strcat(path,name);
+	
+	
+	FILE *fp;
+	fp = fopen(path, "a");
+	if(fp==NULL){
+		printf("error occured while file opening");
+		exit(0);
+	}
+	
+	fprintf(fp, "%d %f %f %f %f %f %f\n" ,marks.stu_id, marks.sub[0], marks.sub[1], marks.sub[2], marks.sub[3], marks.sub[4], marks.per);
+	
+	fclose(fp);
+	
 }

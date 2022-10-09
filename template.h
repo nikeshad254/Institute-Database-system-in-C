@@ -44,8 +44,9 @@ struct student{
 	}address;
 	
 };
-// for reasult
-struct reasult{
+// for result
+struct result{
+	int stu_id;
 	float sub[5];
 	float per;
 };
