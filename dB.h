@@ -242,8 +242,6 @@ void fetch_stupers(int Co_id, struct student *arr){
 	}
 	
 	for(i=0; i<data_no; i++){
-		printf("sucess here!\n\n");
-
 		fscanf(fp, "%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", &arr->stu_id, arr->pwd, &arr->roll_no, arr->fname, arr->lname, &arr->gender, arr->dob, arr->phone, arr->email, arr->address.per_prov, arr->address.per_dist, arr->address.per_street, arr->address.temp_prov, arr->address.temp_dist, arr->address.temp_street);
 		arr++;
 	}
@@ -268,10 +266,11 @@ int add_stupers(int Co_id, struct student arr){
 	
 	strcpy(path,db);
 	strcat(path,name);
+	
 	fp = fopen(path, "a");
 	
+	strcpy(arr.pwd, arr.fname);
 	
-		
 	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
 	
 	

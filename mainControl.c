@@ -2,11 +2,13 @@
 
 
 void main(){
-	int opt, chance;			//options declarations
+	int opt, chance, data_no, verify;			//options declarations
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
 	struct institute temp;			//temporary data holder of institute
 	struct institute insta;			//data of one institute holder
+	struct student tstu;			//temporary student.
+	char name[300];
 	
 	do{
 		Sleep(500);
@@ -85,6 +87,7 @@ void main(){
 								
 								if(result != 0){	//access company validity
 									access_one_institute(&insta, temp.inst_id);
+
 									do{
 										Sleep(500);
 										system("cls");
@@ -97,7 +100,85 @@ void main(){
 											
 											case 1:
 												//add student data
-												
+												do{
+													//fetching data.
+													generate_path(temp.inst_id, PERS, name);
+													data_no = data_count(name);
+
+													struct student arr[data_no];
+													fetch_stupers(temp.inst_id, arr);
+													
+													Sleep(500);
+													system("cls");
+													printf("Choose one from below:\n 1. New Student \t2. Old Student Marks\t3. Back\n==> ");
+													scanf("%d",&opt);
+													switch(opt){
+														case 1:
+															// new student
+															printf("Adding New Data....\n");
+															printf("First Name: ");
+															scanf("%s",tstu.fname);
+															printf("Last Name: ");
+															scanf("%s",tstu.lname);
+															
+															do{
+																opt = 101;
+																printf("Roll no: ");
+																scanf("%d",&tstu.roll_no);
+																for(i=0; i<data_no; i++){
+																	if(tstu.roll_no == arr[i].roll_no){
+																		printf("\nThis roll number exists already.\n");
+																		opt = 1;
+																		break;
+																	}
+																}
+															}while(opt != 101);
+															printf("Gender(1 for male , 2 for female): ");
+															scanf("%d",&tstu.gender);
+															printf("Date of Birth (YYYY-MM-DD): ");
+															scanf("%s",tstu.dob);
+															printf("Phone: ");
+															scanf("%s",tstu.phone);
+															printf("Email: ");
+															scanf("%s",tstu.email);
+															
+															printf("\n...Temporary Address...\nProvince: ");
+															scanf("%s",tstu.address.temp_prov);
+															printf("District: ");
+															scanf("%s",tstu.address.temp_dist);
+															printf("Street/Village: ");
+															scanf("%s",tstu.address.temp_street);
+															
+															printf("\n...Permanent Address...\nProvince: ");
+															scanf("%s",tstu.address.per_prov);
+															printf("District: ");
+															scanf("%s",tstu.address.per_dist);
+															printf("Street/Village: ");
+															scanf("%s",tstu.address.per_street);
+															
+															//id auto done from dB
+															//password auto done from dB
+															verify = add_stupers(temp.inst_id, tstu);
+															printf("\n\nstudent id is ==> %d",verify);
+															Sleep(2000);
+															
+															
+															
+														break;
+														
+														case 2:
+															//old student marks
+														break;
+														
+														case 3:
+															printf("\ngetting back!!...........\n");
+															Sleep(500);
+														break;
+														default:
+															printf("\n this is invalid case. \n");
+														
+													}
+												}while(opt!=3);
 												
 												
 											break;
@@ -116,6 +197,9 @@ void main(){
 											
 											case 5:
 												//exit
+												printf("\nExiting Now ..... \n");
+												Sleep(1000);
+												exit(0);
 											break;
 											
 										}
@@ -169,9 +253,9 @@ void main(){
 									}
 									
 								}while(opt!=2);
-								
-								
-							}else{
+							}
+							
+							else{
 								printf("\nid or password invalid!!\n");
 								Sleep(500);
 							}
@@ -188,17 +272,11 @@ void main(){
 						default:
 							printf("this is a invalid input!! try again\n");
 							Sleep(500);
-							system("cls");
-							
+							system("cls");	
 					}
 					
 				}while(opt!=4);
-				
-				
-				
-				
-				
-				
+
 			break;
 			
 			case 3:	//for exit
