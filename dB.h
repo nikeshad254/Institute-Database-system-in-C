@@ -427,15 +427,53 @@ int check_isdata(int Co_id, int mode, int stu_id){
 }
 
 int delete_stu_data(int Co_id, int Stu_id){
-	char name[300];
-	int i, data_no;
+	// 1 -> only acad delete
+	// 2 -> only pers delete
+	// 3 -> all delete
+	// 0 -> delete failed not found
+	
+	char name[300], path[300];
+	FILE *fp;
+	int i, data_no, check, ret=0;
 //	strcpy(path, db);
 	generate_path(Co_id, ACAD, name);
 	data_no= data_count(name);
 	struct result all[data_no];
+	check = check_isdata(Co_id, ACAD, Stu_id);
+	if(check == 1){
+		fetch_stuacad(Co_id, all);
+		strcpy(path,db);
+		strcat(path,name);
+		fp = fopen(path, "w");
+		for(i=0; i<data_no; i++){
+			if(Stu_id != all[i].stu_id){
+				fprintf(fp, "%d %f %f %f %f %f %f\n" ,all[i].stu_id, all[i].sub[0], all[i].sub[1], all[i].sub[2], all[i].sub[3], all[i].sub[4], all[i].per);
+			}
+		}
+		fclose(fp);
+		
+		ret = 1;
+	}
+	
 	
 	generate_path(Co_id, PERS, name);
 	data_no = data_count(name);
 	struct student stu[data_no];
-	return 0;
+	check = check_isdata(Co_id, PERS, Stu_id);
+	if(check == 1){
+		fetch_stupers(128, stu);
+		strcpy(path,db);
+		strcat(path,name);
+		fp = fopen(path, "w");
+			for(i=0; i<data_no; i++){
+				if(Stu_id != stu[i].stu_id){
+					fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
+				}
+			}
+	
+		ret += 2;
+	}
+	
+	
+	return ret;
 }
