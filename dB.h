@@ -18,7 +18,9 @@ void access_one_institute(struct institute *arr, int id);
 void generate_path(int Co_id, int mode, char *gen_path );
 void fetch_stupers(int Co_id, struct student *arr);
 int add_stupers(int Co_id, struct student arr);
+void fetch_stuacad(int Co_id, struct result *arr);
 void add_stuacad(int Co_id, struct result marks);
+void fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
 
 
 // counts number of data from any file
@@ -326,5 +328,42 @@ void add_stuacad(int Co_id, struct result marks){
 	fprintf(fp, "%d %f %f %f %f %f %f\n" ,marks.stu_id, marks.sub[0], marks.sub[1], marks.sub[2], marks.sub[3], marks.sub[4], marks.per);
 	
 	fclose(fp);
+	
+}
+void fetch_one_stupers(int Co_id, int stu_id, struct student *stu){
+	
+	char name[300];
+	int i;
+//	strcpy(path, db);
+	generate_path(Co_id, PERS, name);
+	int data_no = data_count(name);
+	struct student all[data_no];
+	
+	fetch_stupers(Co_id, all);
+	
+	for(i=0; i<data_no; i++){
+		if(stu_id == all[i].stu_id){
+			
+			stu->stu_id = all[i].stu_id;
+			strcpy(stu->pwd , all[i].pwd);
+			stu->roll_no = all[i].roll_no;
+			strcpy(stu->fname , all[i].fname) ;
+			strcpy(stu->lname , all[i].lname) ;
+			stu->gender = all[i].gender;
+			strcpy(stu->dob , all[i].dob) ;
+			strcpy(stu->phone , all[i].phone) ;
+			strcpy(stu->email , all[i].email) ;
+			
+			strcpy(stu->address.per_prov , all[i].address.per_prov) ;
+			strcpy(stu->address.per_dist , all[i].address.per_dist) ;
+			strcpy(stu->address.per_street , all[i].address.per_street) ;
+			
+			strcpy(stu->address.temp_prov , all[i].address.temp_prov) ;
+			strcpy(stu->address.temp_dist , all[i].address.temp_dist) ;
+			strcpy(stu->address.temp_street , all[i].address.temp_street) ;
+			
+			break;
+		}
+	}
 	
 }
