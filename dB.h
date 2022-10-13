@@ -20,8 +20,8 @@ void fetch_stupers(int Co_id, struct student *arr);
 int add_stupers(int Co_id, struct student arr);
 void fetch_stuacad(int Co_id, struct result *arr);
 void add_stuacad(int Co_id, struct result marks);
-void fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
-
+int fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
+int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu);
 
 // counts number of data from any file
 int data_count(char file_name[]){		//working
@@ -330,7 +330,7 @@ void add_stuacad(int Co_id, struct result marks){
 	fclose(fp);
 	
 }
-void fetch_one_stupers(int Co_id, int stu_id, struct student *stu){
+int fetch_one_stupers(int Co_id, int stu_id, struct student *stu){
 	
 	char name[300];
 	int i;
@@ -362,8 +362,34 @@ void fetch_one_stupers(int Co_id, int stu_id, struct student *stu){
 			strcpy(stu->address.temp_dist , all[i].address.temp_dist) ;
 			strcpy(stu->address.temp_street , all[i].address.temp_street) ;
 			
-			break;
+			return 1;
 		}
 	}
+	return 0;
 	
+}
+int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu){
+	char name[300];
+	int i;
+//	strcpy(path, db);
+	generate_path(Co_id, ACAD, name);
+	int data_no = data_count(name);
+	struct result all[data_no];
+	
+	fetch_stuacad(Co_id, all);
+	for(i=0; i<data_no; i++){
+		if(stu_id == all[i].stu_id){
+			
+			stu->stu_id = all[i].stu_id;
+			stu->sub[0] = all[i].sub[0];
+			stu->sub[1] = all[i].sub[1];
+			stu->sub[2] = all[i].sub[2];
+			stu->sub[3] = all[i].sub[3];
+			stu->sub[4] = all[i].sub[4];
+			
+			stu->per = all[i].per;
+			return 1;
+		}
+	}
+	return 0;
 }
