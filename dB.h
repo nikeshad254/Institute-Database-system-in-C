@@ -472,14 +472,107 @@ int delete_stupers(int Co_id, int Stu_id){
 		strcpy(path,db);
 		strcat(path,name);
 		fp = fopen(path, "w");
-			for(i=0; i<data_no; i++){
-				if(Stu_id != stu[i].stu_id){
-					fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
-				}
+		for(i=0; i<data_no; i++){
+			if(Stu_id != stu[i].stu_id){
+				fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
 			}
+		}
 	
 		ret = 1;
 	}
 	return ret;
 }
 
+
+
+int update_rollno(int Co_id){
+	char name[300], path[300];
+	int i, j;
+	
+	FILE *fp;
+	generate_path(Co_id, PERS, name);
+	int data_no = data_count(name);
+
+	generate_path(Co_id, ACAD, name);
+	int data_num= data_count(name);
+	
+	if(data_no != data_num){
+		printf("\n error personal and academic data number doesnt matches!!");
+		return 0;
+	}
+	
+	struct student stu[data_no];
+	fetch_stupers(Co_id, stu);
+	
+	struct result marks[data_num];
+	fetch_stuacad(Co_id, marks);
+	
+	int id[data_no], itemp;
+	float per[data_no], temp;
+	for (i=0 ; i<data_no; i++){
+		per[i] = marks[i].per;
+		id[i] = marks[i].stu_id;
+	}
+	for(i=0; i<data_no; i++){
+		j =  i+1;
+		if(per[i]<per[j]){
+			temp = per[j];
+			per[j] = per[i];
+			per[i] = temp;
+			
+			itemp = id[j];
+			id[j] = id[i];
+			id[i] = temp;
+		}
+	}
+	
+	struct student tstu;
+	for(i=0; i<data_no; i++){
+		for(j=0; j<data_no; j++){
+//			printf("%d -> %d\n", i, j);
+			if(id[i] == stu[j].stu_id){
+				tstu = stu[j];
+				stu[j] = stu[i];
+				stu[i] = tstu;
+				
+				stu[i].roll_no = i+1;
+				break;
+			}
+		}
+		
+	}
+	struct result tmark;
+	for(i=0; i<data_no; i++){
+		for(j=0; j<data_no; j++){
+//			printf("%d -> %d\n", i, j);
+			if(id[i] == marks[j].stu_id){
+				tmark = marks[j];
+				marks[j] = marks[i];
+				marks[i] = tmark;
+				
+				break;
+			}
+		}
+		
+	}
+	
+	strcpy(path,db);
+	generate_path(Co_id, PERS, name);
+	strcat(path,name);
+	fp = fopen(path, "w");
+	for(i=0; i<data_no; i++){
+		fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
+	}
+	fclose(fp);
+	
+	strcpy(path,db);
+	generate_path(Co_id, ACAD, name);
+	strcat(path,name);
+	fp = fopen(path, "w");
+	for(i=0; i<data_no; i++){
+		fprintf(fp, "%d %f %f %f %f %f %f\n" ,marks[i].stu_id, marks[i].sub[0], marks[i].sub[1], marks[i].sub[2], marks[i].sub[3], marks[i].sub[4], marks[i].per);
+	}
+	fclose(fp);
+	
+	return 1;
+}
