@@ -23,7 +23,8 @@ void add_stuacad(int Co_id, struct result marks);
 int fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
 int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu);
 int check_isdata(int Co_id, int mode, int stu_id);
-
+int delete_stuacad(int Co_id, int Stu_id);
+int delete_stupers(int Co_id, int Stu_id);
 
 // counts number of data from any file
 int data_count(char file_name[]){		//working
@@ -426,7 +427,7 @@ int check_isdata(int Co_id, int mode, int stu_id){
 	return 0;
 }
 
-int delete_stu_data(int Co_id, int Stu_id){
+int delete_stuacad(int Co_id, int Stu_id){
 	// 1 -> only acad delete
 	// 2 -> only pers delete
 	// 3 -> all delete
@@ -455,13 +456,19 @@ int delete_stu_data(int Co_id, int Stu_id){
 		ret = 1;
 	}
 	
+	return ret;
+}
+int delete_stupers(int Co_id, int Stu_id){
+	char name[300], path[300];
+	FILE *fp;
+	int i, data_no, check, ret=0;
 	
 	generate_path(Co_id, PERS, name);
 	data_no = data_count(name);
 	struct student stu[data_no];
 	check = check_isdata(Co_id, PERS, Stu_id);
 	if(check == 1){
-		fetch_stupers(128, stu);
+		fetch_stupers(Co_id, stu);
 		strcpy(path,db);
 		strcat(path,name);
 		fp = fopen(path, "w");
@@ -471,9 +478,8 @@ int delete_stu_data(int Co_id, int Stu_id){
 				}
 			}
 	
-		ret += 2;
+		ret = 1;
 	}
-	
-	
 	return ret;
 }
+
