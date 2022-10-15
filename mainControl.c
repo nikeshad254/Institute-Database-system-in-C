@@ -2,12 +2,13 @@
 
 
 void main(){
-	int opt, chance, data_no, verify;			//options declarations
+	int opt, inopt, chance, data_no, verify;			//options declarations
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
 	struct institute temp;			//temporary data holder of institute
 	struct institute insta;			//data of one institute holder
 	struct student tstu;			//temporary student.
+	struct result tres;				//temporary result.
 	char name[300];
 	
 	do{
@@ -159,11 +160,87 @@ void main(){
 															//id auto done from dB
 															//password auto done from dB
 															verify = add_stupers(temp.inst_id, tstu);
-															printf("\n\nstudent id is ==> %d",verify);
+															printf("\n\nstudent id is ==> %d\n",verify);
 															Sleep(2000);
 															
+															do{
+																Sleep(500);
+																system("cls");
+																printf("Would you like to add marks?\n1. Yes\t2. No/Default(0)\n===> ");
+																scanf("%d", &inopt);
+																if(inopt == 1){
+																	//add mark mannually
+																		system("cls");
+																		printf("Allocating marks.........\n");
+																		tres.stu_id = verify;	//verify is id holder of student just added
+																		printf("subject one: ");
+																		scanf("%f",&tres.sub[0]);
+																		printf("subject two: ");
+																		scanf("%f",&tres.sub[1]);
+																		printf("subject three: ");
+																		scanf("%f",&tres.sub[2]);
+																		printf("subject four: ");
+																		scanf("%f",&tres.sub[3]);
+																		printf("subject five: ");
+																		scanf("%f",&tres.sub[4]);
+																		add_stuacad(temp.inst_id, tres);
+																		printf("Added data sucessfully!!\n");
+																		Sleep(500);
+																		
+																		do{
+																			system("cls");
+																			printf("Would you like to update roll numbers?\n 1. Yes \n2. No/Exit \n\n==> ");
+																			scanf("%d",&opt);
+																			if(opt == 1){
+																				update_rollno(temp.inst_id);
+																				printf("\n Roll no Updated\n");
+																				Sleep(500);
+																				break;
+																			}
+																			else if(opt == 2){
+																				printf("\nexiting..........\n");
+																				
+																				Sleep(500);
+																				break;
+																			}
+																			else{
+																				printf("\nInvalid case please try again!\n");
+																				Sleep(500);
+																			}
+																			
+																			
+																		}while(1==1);
+																		
+																		
+																		
+																		break;
+																}
+																else if(inopt == 2){
+																	//default case of all 0 marks and auto update roll no.
+																	tres.stu_id = verify;
+																	tres.sub[0] = 0;
+																	tres.sub[1] = 0;
+																	tres.sub[2] = 0;
+																	tres.sub[3] = 0;
+																	tres.sub[4] = 0;
+																	
+																	add_stuacad(temp.inst_id, tres);
+																	
+																	update_rollno(temp.inst_id);
+																	printf("data added and roll updated!! ");
+																	Sleep(500);
+																	
+																	break;
+																	
+																}
+																else{
+																	printf("\n Invalid case!! \n");
+																}
+
+															}while(inopt!=1 || inopt!=2);
+																
 															
-															
+															opt = 3; 	//direct back!
 														break;
 														
 														case 2:
