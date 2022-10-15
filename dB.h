@@ -259,7 +259,7 @@ void fetch_stupers(int Co_id, struct student *arr){
 int add_stupers(int Co_id, struct student arr){
 	FILE *fp;
 	char name[300], path[300];
-	int i, id;
+	int i, id, max = 0;
 //	strcpy(path, db);
 	generate_path(Co_id, PERS, name);	
 	int data_no = data_count(name);
@@ -267,8 +267,12 @@ int add_stupers(int Co_id, struct student arr){
 	struct student stu[data_no];
 	fetch_stupers(Co_id, stu);
 	
-	id = stu[data_no - 1].stu_id + 3;
-	arr.stu_id = id;
+	for(i=0; i<data_no; i++){
+		if(max < stu[i].stu_id){
+			max = stu[i].stu_id;
+		}
+	}
+	arr.stu_id = max + 3;
 	
 	strcpy(path,db);
 	strcat(path,name);
@@ -283,7 +287,7 @@ int add_stupers(int Co_id, struct student arr){
 	fclose(fp);
 	
 	
-	return id;
+	return arr.stu_id;
 }
 
 void fetch_stuacad(int Co_id, struct result *arr){
@@ -544,10 +548,11 @@ int update_rollno(int Co_id){
 				stu[j] = stu[i];
 				stu[i] = tstu;
 				
+				stu[i].roll_no = i+1;
 				break;
 			}
 		}
-		stu[i].roll_no = i+1;
+		
 	}
 	
 	
