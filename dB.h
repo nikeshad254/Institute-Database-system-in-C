@@ -509,24 +509,32 @@ int update_rollno(int Co_id){
 	fetch_stuacad(Co_id, marks);
 	
 	int id[data_no], itemp;
+	
 	float per[data_no], temp;
-	for (i=0 ; i<data_no; i++){
+	
+	for (i=0; i<data_no; i++){
 		per[i] = marks[i].per;
 		id[i] = marks[i].stu_id;
 	}
+
+
 	for(i=0; i<data_no; i++){
-		j =  i+1;
-		if(per[i]<per[j]){
-			temp = per[j];
-			per[j] = per[i];
-			per[i] = temp;
+		
+		for(j=i+1; j<data_no; j++){
+			if(per[i]<per[j]){
 			
-			itemp = id[j];
-			id[j] = id[i];
-			id[i] = temp;
+				temp = per[j];
+				per[j] = per[i];
+				per[i] = temp;
+			
+				itemp = id[j];
+				id[j] = id[i];
+				id[i] = itemp;
+			}
 		}
+
 	}
-	
+
 	struct student tstu;
 	for(i=0; i<data_no; i++){
 		for(j=0; j<data_no; j++){
@@ -541,6 +549,8 @@ int update_rollno(int Co_id){
 		}
 		stu[i].roll_no = i+1;
 	}
+	
+	
 	struct result tmark;
 	for(i=0; i<data_no; i++){
 		for(j=0; j<data_no; j++){
@@ -555,6 +565,7 @@ int update_rollno(int Co_id){
 		}
 		
 	}
+	
 	
 	strcpy(path,db);
 	generate_path(Co_id, PERS, name);
