@@ -25,6 +25,7 @@ int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu);
 int check_isdata(int Co_id, int mode, int stu_id);
 int delete_stuacad(int Co_id, int Stu_id);
 int delete_stupers(int Co_id, int Stu_id);
+int update_rollno(int Co_id);
 
 // counts number of data from any file
 int data_count(char file_name[]){		//working
@@ -535,11 +536,10 @@ int update_rollno(int Co_id){
 				stu[j] = stu[i];
 				stu[i] = tstu;
 				
-				stu[i].roll_no = i+1;
 				break;
 			}
 		}
-		
+		stu[i].roll_no = i+1;
 	}
 	struct result tmark;
 	for(i=0; i<data_no; i++){
