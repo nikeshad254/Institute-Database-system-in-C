@@ -2,10 +2,10 @@
 
 
 void main(){
-	int opt, inopt, chance, data_no, verify;			//options declarations
+	int opt, inopt, chance, data_no, verify, check;			//options declarations
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
-	struct institute temp;			//temporary data holder of institute
+	struct institute temp;			//temporary data holder of institute (through out(permanent) after verification),
 	struct institute insta;			//data of one institute holder
 	struct student tstu;			//temporary student.
 	struct result tres;				//temporary result.
@@ -106,8 +106,11 @@ void main(){
 													generate_path(temp.inst_id, PERS, name);
 													data_no = data_count(name);
 
-													struct student arr[data_no];
-													fetch_stupers(temp.inst_id, arr);
+													struct student pers[data_no];
+													fetch_stupers(temp.inst_id, pers);
+													
+													struct result acad[data_no];
+													fetch_stuacad(temp.inst_id, acad);
 													
 													Sleep(500);
 													system("cls");
@@ -127,7 +130,7 @@ void main(){
 																printf("Roll no: ");
 																scanf("%d",&tstu.roll_no);
 																for(i=0; i<data_no; i++){
-																	if(tstu.roll_no == arr[i].roll_no){
+																	if(tstu.roll_no == pers[i].roll_no){
 																		printf("\nThis roll number exists already.\n");
 																		opt = 1;
 																		break;
@@ -245,6 +248,49 @@ void main(){
 														
 														case 2:
 															//old student marks
+															system("cls");
+															printf("List of student id and marks are:- \n\n");
+															printf("Student ID\tSubject One\t Subject Two\tSubject three\tSubject Four\tSubject Five\tPercentage\n");//acad has scope
+															for(i=0; i<data_no; i++){
+																printf("%d\t\t%f\t%f\t%f\t%f\t%f\t%f\n", acad[i].stu_id, acad[i].sub[0], acad[i].sub[1], acad[i].sub[2], acad[i].sub[3], acad[i].sub[4], acad[i].per);
+																
+															}
+															do{
+																printf("\n\nGive id to modify==> ");
+																scanf("%d", &tres.stu_id);
+																check = check_isdata(temp.inst_id, ACAD, tres.stu_id);
+																if(check == 1){
+																	system("cls");
+																	printf("Student id found - %d\n",tres.stu_id);
+																	break;
+																}
+																else{
+																	printf("\ninvalid Such id not found!!");
+																	
+																}
+
+															}while(1 == 1);
+															
+															delete_stuacad(temp.inst_id, tres.stu_id);
+															printf("Subject One marks ==> ");
+															scanf("%f",&tres.sub[0]);
+															printf("Subject Two marks ==> ");
+															scanf("%f",&tres.sub[1]);
+															printf("Subject Three marks ==> ");
+															scanf("%f",&tres.sub[2]);
+															printf("Subject Four marks ==> ");
+															scanf("%f",&tres.sub[3]);
+															printf("Subject Five marks ==> ");
+															scanf("%f",&tres.sub[4]);
+															
+															add_stuacad(temp.inst_id, tres);
+															
+															update_rollno(temp.inst_id);
+															
+															printf("\nData added and roll updated too!!\n");
+															Sleep(500);
+															opt = 3;
+
 														break;
 														
 														case 3:
