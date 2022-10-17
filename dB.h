@@ -248,7 +248,7 @@ void fetch_stupers(int Co_id, struct student *arr){
 	}
 	
 	for(i=0; i<data_no; i++){
-		fscanf(fp, "%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", &arr->stu_id, arr->pwd, &arr->roll_no, arr->fname, arr->lname, &arr->gender, arr->dob, arr->phone, arr->email, arr->address.per_prov, arr->address.per_dist, arr->address.per_street, arr->address.temp_prov, arr->address.temp_dist, arr->address.temp_street);
+		fscanf(fp, "%d %s %d %s %s %d %s %s %s %s %s %s %s %s %s\n", &arr->stu_id, arr->pwd, &arr->roll_no, arr->fname, arr->lname, &arr->gender, arr->dob, arr->phone, arr->email, arr->address.per_prov, arr->address.per_dist, arr->address.per_street, arr->address.temp_prov, arr->address.temp_dist, arr->address.temp_street);
 		arr++;
 	}
 	
@@ -479,7 +479,7 @@ int delete_stupers(int Co_id, int Stu_id){
 		fp = fopen(path, "w");
 		for(i=0; i<data_no; i++){
 			if(Stu_id != stu[i].stu_id){
-				fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
+				fprintf(fp,"%d %s %d %s %s %d %s %s %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
 			}
 		}
 	
