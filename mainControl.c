@@ -10,6 +10,7 @@ void main(){
 	struct student tstu;			//temporary student.
 	struct result tres;				//temporary result.
 	char name[300];
+	char gender[10];				//for gender confersion at displays.
 	
 	do{
 		Sleep(500);
@@ -308,6 +309,180 @@ void main(){
 											
 											case 2:
 												//fetch data
+												do{
+													Sleep(500);
+													system("cls");
+													generate_path(temp.inst_id, PERS, name);
+													data_no = data_count(name);
+
+													struct student pers[data_no];
+													fetch_stupers(temp.inst_id, pers);
+													
+													struct result acad[data_no];
+													fetch_stuacad(temp.inst_id, acad);
+													
+													
+													printf("Fetching datas .................... \n");
+													
+													printf("What would you like to do \n 1. Fetch all Data\n 2. Fetch all Personal data\n 3. Fetch all Academic data\n 4. Fetch One Student data\n 5. Back\n ===> ");
+													scanf("%d",&opt);
+													switch(opt){
+														case 1:
+															//fetch all data
+															system("cls");
+															printf("\n\n----------------Persosnal Data-----------------\n");
+															printf("ID\tRoll No\tGender\tDOB\t\tPhone\tEmail\t\tName\t\tPermanent Address\tTemporary Address\n");
+															for(i=0; i<data_no; i++){
+																if(pers[i].gender == 1){
+																	strcpy(gender, "Male");
+																}
+																else if(pers[i].gender == 2){
+																	strcpy(gender, "Female");
+																}
+																else{
+																	strcpy(gender, "Not Found");
+																}
+																
+																printf("%d\t%d\t%s\t%s\t%s\t%s",pers[i].stu_id, pers[i].roll_no, gender, pers[i].dob, pers[i].phone, pers[i].email);
+																
+																if(strlen(pers[i].email)<10){	//2 tab size.
+																	printf("\t");
+																}
+																printf("\t%s %s", pers[i].fname, pers[i].lname);
+																if(strlen(pers[i].lname) < 5){
+																	printf("\t");
+																}
+																printf("\t%s,%s,%s", pers[i].address.per_prov, pers[i].address.per_dist, pers[i].address.per_street);
+																
+																if(strlen(pers[i].address.per_street) < 5){
+																	printf("\t");
+																}
+																printf("\t %s,%s,%s", pers[i].address.temp_prov, pers[i].address.temp_dist, pers[i].address.temp_street);
+																printf("\n");
+																
+															}
+															
+															
+															printf("\n\n------------------Academic Data-------------------\n");
+															printf("Student ID\tSubject One\t Subject Two\tSubject three\tSubject Four\tSubject Five\tPercentage\n");//acad has scope
+															for(i=0; i<data_no; i++){
+																printf("%d\t\t%f\t%f\t%f\t%f\t%f\t%f\n", acad[i].stu_id, acad[i].sub[0], acad[i].sub[1], acad[i].sub[2], acad[i].sub[3], acad[i].sub[4], acad[i].per);
+															}
+															printf("\n\npress 1 to exit!! data view mode ");
+															do{
+																printf("===> ");
+																scanf("%d", &inopt);
+																
+																if(inopt == 1){
+																	printf("\nexiting fetch all view ..........\n");
+																	Sleep(500);
+																}
+																else{
+																	printf("\ninvaild, try again ");
+																}
+															}while(inopt!=1);
+															opt = 101;
+															
+															
+														break;
+														
+														case 2:
+															//fetch personal data
+															system("cls");
+															printf("\n----------------Persosnal Data-----------------\n\n");
+															printf("ID\tRoll No\tGender\tDOB\t\tPhone\tEmail\t\tName\t\tPermanent Address\tTemporary Address\n");
+															for(i=0; i<data_no; i++){
+																if(pers[i].gender == 1){
+																	strcpy(gender, "Male");
+																}
+																else if(pers[i].gender == 2){
+																	strcpy(gender, "Female");
+																}
+																else{
+																	strcpy(gender, "Not Found");
+																}
+																
+																printf("%d\t%d\t%s\t%s\t%s\t%s",pers[i].stu_id, pers[i].roll_no, gender, pers[i].dob, pers[i].phone, pers[i].email);
+																
+																if(strlen(pers[i].email)<10){	//2 tab size.
+																	printf("\t");
+																}
+																printf("\t%s %s", pers[i].fname, pers[i].lname);
+																if(strlen(pers[i].lname) < 5){
+																	printf("\t");
+																}
+																printf("\t%s,%s,%s", pers[i].address.per_prov, pers[i].address.per_dist, pers[i].address.per_street);
+																
+																if(strlen(pers[i].address.per_street) < 5){
+																	printf("\t");
+																}
+																printf("\t %s,%s,%s", pers[i].address.temp_prov, pers[i].address.temp_dist, pers[i].address.temp_street);
+																printf("\n");
+																
+															}
+															
+															printf("\n\npress 1 to exit!! data view mode ");
+															do{
+																printf("===> ");
+																scanf("%d", &inopt);
+																
+																if(inopt == 1){
+																	printf("\nexiting fetch all view ..........\n");
+																	Sleep(500);
+																}
+																else{
+																	printf("\ninvaild, try again ");
+																}
+															}while(inopt!=1);
+															opt = 101;
+															
+														break;
+															
+														case 3:
+															//fetch all academic
+															system("cls");
+															printf("\n------------------Academic Data-------------------\n\n");
+															printf("Student ID\tSubject One\t Subject Two\tSubject three\tSubject Four\tSubject Five\tPercentage\n");//acad has scope
+															for(i=0; i<data_no; i++){
+																printf("%d\t\t%f\t%f\t%f\t%f\t%f\t%f\n", acad[i].stu_id, acad[i].sub[0], acad[i].sub[1], acad[i].sub[2], acad[i].sub[3], acad[i].sub[4], acad[i].per);
+															}
+															printf("\n\npress 1 to exit!! data view mode ");
+															do{
+																printf("===> ");
+																scanf("%d", &inopt);
+																
+																if(inopt == 1){
+																	printf("\nexiting fetch all view ..........\n");
+																	Sleep(500);
+																}
+																else{
+																	printf("\ninvaild, try again ");
+																}
+															}while(inopt!=1);
+															opt = 101;
+															
+														break;
+														
+														case 4:
+															//fetch of one person
+														break;
+														
+														case 5:
+															//exit or back
+															
+															printf("\n Getting Back ...............\n ");
+															Sleep(500);
+															opt = 101;
+														break;
+														
+														default:
+															opt = 10;
+															printf("that is invalid try again! ");
+															Sleep(500);
+													}
+													
+												}while(opt != 101);
+												
 											break;
 											
 											case 3:
