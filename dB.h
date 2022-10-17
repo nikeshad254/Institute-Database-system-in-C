@@ -412,8 +412,9 @@ int check_isdata(int Co_id, int mode, int stu_id){
 		struct student arr[data_no];
 		fetch_stupers(Co_id, arr);
 		for(i=0; i<data_no; i++){
-		
+	
 			if(stu_id == arr[i].stu_id){
+
 				return 1;
 			}
 		}
@@ -425,6 +426,7 @@ int check_isdata(int Co_id, int mode, int stu_id){
 		fetch_stuacad(Co_id, all);
 		for(i=0; i<data_no; i++){
 			if(stu_id == all[i].stu_id){
+
 				return 1;
 			}
 		}

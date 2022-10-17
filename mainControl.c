@@ -2,7 +2,7 @@
 
 
 void main(){
-	int opt, inopt, chance, data_no, verify, check;			//options declarations
+	int opt, inopt, chance, data_no, verify, check, id;			//options declarations & frequent temp
 	int i, j;			// loop vars			
 	int admin_pass, prov_pass;		//password holder
 	struct institute temp;			//temporary data holder of institute (through out(permanent) after verification),
@@ -465,6 +465,72 @@ void main(){
 														
 														case 4:
 															//fetch of one person
+															printf("Give student id to fetch data ==> ");
+															scanf("%d", &id);
+															
+															check = check_isdata(temp.inst_id, PERS, id);
+															
+															if(check == 1){
+																printf("\nvalid id....");
+																Sleep(300);
+																system("cls");
+																
+																printf("--------------Personal info--------------\n");
+																fetch_one_stupers(temp.inst_id, id, &tstu);
+																printf("Name: %s %s \nRoll No: %d \nStudent ID: %d\nPassword: %s\n", tstu.fname, tstu.lname, tstu.roll_no, tstu.stu_id, tstu.pwd);
+																if(tstu.gender == 1){
+																	strcpy(gender, "Male");
+																}
+																else if(tstu.gender == 2){
+																	strcpy(gender, "Female");
+																}
+																else{
+																	strcpy(gender, "Not Found");
+																}
+																printf("Gender: %s\nDate of Birth : %s\nPhone: %s\nEmail: %s\n", gender, tstu.dob, tstu.phone, tstu.email);
+																printf("----------Permanent Address-----------\nProvinvce: %s\nDistrict: %s\nStreet/town: %s\n", tstu.address.per_prov, tstu.address.per_dist, tstu.address.per_street);
+																printf("----------Temporary Address-----------\nProvinvce: %s\nDistrict: %s\nStreet/town: %s\n", tstu.address.temp_prov, tstu.address.temp_dist, tstu.address.temp_street);
+																
+																check = check_isdata(temp.inst_id, ACAD, id);
+																if(check == 1){
+																	fetch_one_stuacad(temp.inst_id, id, &tres);
+																	printf("\n\n--------------Academic Data-------------\n");
+																	printf("Subject One : %f\nSubject Two : %f\nSubject Three : %f\nSubject Four : %f\nSubject Five : %f\n", tres.sub[0], tres.sub[1], tres.sub[2], tres.sub[3], tres.sub[4]);
+																	printf("Total scored : %f", tres.sub[0] + tres.sub[1] + tres.sub[2] + tres.sub[3] + tres.sub[4]);
+																	printf("\n\nPercentage : %f", tres.per);
+																	
+																	
+																	printf("\n\n Enter 1 to exit data view mode ");
+																	do{
+																		printf("===> ");
+																		scanf("%d", &inopt);
+																		if(inopt == 1){
+																			printf("\n\n Exiting now ..........\n");
+																			Sleep(500);
+																			opt =101;
+																		}
+																		else{
+																			printf("invalid, try again ");
+																		}
+																		
+																		
+																	}while(inopt != 1);
+																	
+																	
+																}
+																else{
+																	printf("\n\n Academic data not found!!");
+																}
+															}
+															else{
+																printf("invalid id not found!!");
+																Sleep(500);
+																
+																
+															}
+															
+															
+															
 														break;
 														
 														case 5:
