@@ -16,7 +16,7 @@ void main(){
 		Sleep(500);
 		system("cls");
 		printf("\tWelcome to Institute Database\n...............................................\n");
-		printf("Who are you?\n1. User\n2. Admin\n3. Exit\n===> ");
+		printf("Who are you?\n\t1. User\n\t2. Admin\n\t3. Exit\n===> ");
 		scanf("%d",&opt);
 		switch(opt){
 			case 1: // for user
@@ -95,7 +95,7 @@ void main(){
 										system("cls");
 										printf("............ %s Institute............\n\n", insta.name);
 										
-										printf("What do you want to do?\n1. Add Student Data\n2. Fetch Data\n3. View Latest Result\n4. Modify Data\n5. Exit\n====> ");
+										printf("What do you want to do?\n\t1. Add Student Data\n\t2. Fetch Data\n\t3. View Latest Result\n\t4. Modify Data\n\t5. Exit\n====> ");
 										scanf("%d",&opt);
 										
 										switch(opt){
@@ -324,7 +324,7 @@ void main(){
 													
 													printf("Fetching datas .................... \n");
 													
-													printf("What would you like to do \n 1. Fetch all Data\n 2. Fetch all Personal data\n 3. Fetch all Academic data\n 4. Fetch One Student data\n 5. Back\n ===> ");
+													printf("What would you like to do \n\t 1. Fetch all Data\n\t 2. Fetch all Personal data\n\t 3. Fetch all Academic data\n\t 4. Fetch One Student data\n\t 5. Back\n ===> ");
 													scanf("%d",&opt);
 													switch(opt){
 														case 1:
@@ -553,6 +553,62 @@ void main(){
 											
 											case 3:
 												//view latest result
+												do{
+													
+												
+													Sleep(500);
+													system("cls");
+													
+													update_rollno(128);
+													generate_path(temp.inst_id, PERS, name);
+													data_no = data_count(name);
+	
+													struct student perss[data_no];
+													fetch_stupers(temp.inst_id, perss);
+														
+													struct result acads[data_no];
+													fetch_stuacad(temp.inst_id, acads);
+													
+													printf("-------------------Viewing Latest Result---------------------\n\n");
+													printf("Roll NO\tName\t\tID\tSubject One\tSubject Two\tSubject Three\tSubject Four\tSubject Five\t Percentage\n");
+												
+													for (i=0; i<data_no; i++){
+														
+														printf("%d\t%s %s", perss[i].roll_no, perss[i].fname, perss[i].lname);
+														if(strlen(perss[i].lname)<5){
+															printf("\t");
+														}
+														printf("\t%d\t%f\t%f\t%f\t%f\t%f\t%f%% \t",acads[i].stu_id, acads[i].sub[0], acads[i].sub[1], acads[i].sub[2], acads[i].sub[3], acads[i].sub[4], acads[i].per);
+												
+														printf("\n");
+													}
+													
+													printf("\n\nif any error in result press 2, to exit press 1 .. ");
+													do{
+														printf("===> ");
+														scanf("%d",&check);
+														if(check == 2){
+															printf("\n\nfixing issues.. and exititng ... \n");
+															update_rollno(temp.inst_id);
+															Sleep(500);
+															inopt = 2;
+															break;
+														}
+														else if(check == 1 ){
+															printf("\n\nexiting data view mode........\n");
+															Sleep(500);
+															inopt = 1;
+															break;
+														}
+														else{
+															printf("\n invalid input!! try again ");
+															
+														}
+														
+													}while(1 == 1);
+												
+												}while(inopt != 1);
+												
 											break;
 											
 											case 4:
