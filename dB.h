@@ -37,8 +37,7 @@ int data_count(char file_name[]){		//working
 	FILE *fp;
 	fp = fopen(name,"r");
 	if(fp == NULL){
-		printf("error occured file not found!");
-		exit(0);
+		return 0;
 	}
 	char ch;
 	int i=0;
