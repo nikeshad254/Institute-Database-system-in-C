@@ -106,7 +106,8 @@ void main(){
 													//fetching data.
 													generate_path(temp.inst_id, PERS, name);
 													data_no = data_count(name);
-
+													
+													
 													struct student pers[data_no];
 													fetch_stupers(temp.inst_id, pers);
 													
@@ -127,17 +128,17 @@ void main(){
 															scanf("%s",tstu.lname);
 															
 															do{
-																opt = 101;
+																opt = 102;
 																printf("Roll no: ");
 																scanf("%d",&tstu.roll_no);
 																for(i=0; i<data_no; i++){
 																	if(tstu.roll_no == pers[i].roll_no){
-																		printf("\nThis roll number exists already.\n");
-																		opt = 1;
-																		break;
+																		printf("this roll no already exist try again!\n");
+																		opt = 101;
 																	}
+																	
 																}
-															}while(opt != 101);
+															}while(opt == 101);
 															printf("Gender(1 for male , 2 for female): ");
 															scanf("%d",&tstu.gender);
 															printf("Date of Birth (YYYY-MM-DD): ");
@@ -613,6 +614,348 @@ void main(){
 											
 											case 4:
 												//modify data
+												do{
+													Sleep(500);
+													system("cls");
+													printf("-----------Modifying Datas-----------\n");
+													printf("What do you want to do?\n\t1. Update Roll no\n\t2. Edit Student Academic Data\n\t3. Edit Student Personal Data\n\t4. Edit Student All Data\n\t5. Delete Student Data\n\t6. Back\n===> ");
+													scanf("%d",&opt);
+													switch(opt){
+														case 1:
+															//update roll no
+															system("cls");
+															printf("updating roll on basis of result...........");
+															update_rollno(temp.inst_id);
+															Sleep(500);
+														break;
+														
+														case 2:
+															//Edit student acad
+															system("cls");
+															printf("\n------------Editing academic data----------\nplease provide student id ==> ");
+															scanf("%d",&id);
+															check = check_isdata(temp.inst_id, ACAD, id);
+															if(check == 1){
+																system("cls");
+																tres.stu_id = id;
+																
+																printf("Subject One marks ==> ");
+																scanf("%f",&tres.sub[0]);
+																printf("Subject Two marks ==> ");
+																scanf("%f",&tres.sub[1]);
+																printf("Subject Three marks ==> ");
+																scanf("%f",&tres.sub[2]);
+																printf("Subject Four marks ==> ");
+																scanf("%f",&tres.sub[3]);
+																printf("Subject Five marks ==> ");
+																scanf("%f",&tres.sub[4]);
+																
+																delete_stuacad(temp.inst_id, tres.stu_id);
+																
+																add_stuacad(temp.inst_id, tres);
+																
+																printf("\nWould you like to update roll no?\n\t1. NO & Save\t2. Yes & Save \n");
+																do{
+																	printf("\t==> ");
+																	scanf("%d",&inopt);
+																	if(inopt == 1){
+																		//no
+																		printf("\nData Saved and roll not updated!\n");
+																		Sleep(500);
+																		opt == 6;
+																		break;
+																		
+				
+																	}
+																	else if(inopt == 2){
+																		// yes
+																		printf("\nData Saved and Roll no Updated\n");
+																		update_rollno(temp.inst_id);
+																		opt == 6;
+																		Sleep(500);
+																		break;
+																	}
+																	else{
+																		//default
+																		printf("\ninvalid case, try again ");
+																	}
+																	
+																
+																}while(1 == 1);
+															}
+															else{
+																printf("\nStudent Data doesnt exit for that id!!\n");
+																Sleep(500);
+															}
+															
+															
+														break;
+														
+														case 3:
+															//edit student pers
+															Sleep(500);
+															system("cls");
+															printf("\n------------Editing Personal data----------\nplease provide student id ==> ");
+															scanf("%d",&id);
+															check = check_isdata(temp.inst_id, PERS, id);
+															if(check == 1){
+																generate_path(temp.inst_id, PERS, name);
+																data_no = data_count(name);
+			
+																struct student persdt[data_no];
+																fetch_stupers(temp.inst_id, persdt);
+														
+																printf("--------Changing data --------\n");
+																printf("First Name: ");
+																scanf("%s",tstu.fname);
+																printf("Last Name: ");
+																scanf("%s",tstu.lname);
+																
+																printf("previous roll no is as it is.. \n");
+																for(i=0; i<data_no; i++){
+																	if(id == persdt[i].stu_id){
+																		tstu.roll_no = persdt[i].roll_no;
+																		printf("roll no = %d\n",tstu.roll_no);
+																		break;
+																	}
+																}
+																
+																
+																printf("Gender(1 for male , 2 for female): ");
+																scanf("%d",&tstu.gender);
+																printf("Date of Birth (YYYY-MM-DD): ");
+																scanf("%s",tstu.dob);
+																printf("Phone: ");
+																scanf("%s",tstu.phone);
+																printf("Email: ");
+																scanf("%s",tstu.email);
+																
+																printf("\n...Temporary Address...\nProvince: ");
+																scanf("%s",tstu.address.temp_prov);
+																printf("District: ");
+																scanf("%s",tstu.address.temp_dist);
+																printf("Street/Village: ");
+																scanf("%s",tstu.address.temp_street);
+																
+																printf("\n...Permanent Address...\nProvince: ");
+																scanf("%s",tstu.address.per_prov);
+																printf("District: ");
+																scanf("%s",tstu.address.per_dist);
+																printf("Street/Village: ");
+																scanf("%s",tstu.address.per_street);
+																
+																tstu.stu_id = id;
+																//password auto done from dB
+																
+																delete_stupers(temp.inst_id, id);
+																Sleep(30);
+																verify = add_pers_with_id(temp.inst_id, tstu);
+																
+																printf("\n\nstudent id is ==> %d\n",verify);
+																Sleep(1500);
+																
+								
+															}
+															else{
+																printf("Error! Data for that ID doesn't Exist\n");
+																Sleep(500);
+																
+															}
+														break;
+														
+														case 4:
+															//edit student all
+															Sleep(500);
+															system("cls");
+															printf("\n------------Editing Personal data----------\nplease provide student id ==> ");
+															scanf("%d",&id);
+															check = check_isdata(temp.inst_id, PERS, id);
+															if(check == 1){
+																generate_path(temp.inst_id, PERS, name);
+																data_no = data_count(name);
+			
+																struct student persdts[data_no];
+																fetch_stupers(temp.inst_id, persdts);
+														
+																printf("--------Changing data --------\n");
+																printf("First Name: ");
+																scanf("%s",tstu.fname);
+																printf("Last Name: ");
+																scanf("%s",tstu.lname);
+																
+																printf("previous roll no is as it is.. \n");
+																for(i=0; i<data_no; i++){
+																	if(id == persdts[i].stu_id){
+																		tstu.roll_no = persdts[i].roll_no;
+																		
+																		break;
+																	}
+																}
+																
+																
+																printf("Gender(1 for male , 2 for female): ");
+																scanf("%d",&tstu.gender);
+																printf("Date of Birth (YYYY-MM-DD): ");
+																scanf("%s",tstu.dob);
+																printf("Phone: ");
+																scanf("%s",tstu.phone);
+																printf("Email: ");
+																scanf("%s",tstu.email);
+																
+																printf("\n...Temporary Address...\nProvince: ");
+																scanf("%s",tstu.address.temp_prov);
+																printf("District: ");
+																scanf("%s",tstu.address.temp_dist);
+																printf("Street/Village: ");
+																scanf("%s",tstu.address.temp_street);
+																
+																printf("\n...Permanent Address...\nProvince: ");
+																scanf("%s",tstu.address.per_prov);
+																printf("District: ");
+																scanf("%s",tstu.address.per_dist);
+																printf("Street/Village: ");
+																scanf("%s",tstu.address.per_street);
+																
+																tstu.stu_id = id;
+																//password auto done from dB
+																
+																delete_stupers(temp.inst_id, id);
+																
+																verify = add_pers_with_id(temp.inst_id, tstu);
+																
+																printf("\n\nstudent id is ==> %d\n",verify);
+																Sleep(1000);
+																
+																check = check_isdata(temp.inst_id, ACAD, verify);
+																if(check != 1){
+																	printf("acad data not found for that id\n\tStill..... ");
+																	Sleep(500);
+																}
+																printf("-----------adding academic data---------\n");
+																system("cls");
+																tres.stu_id = verify;
+																
+																printf("Subject One marks ==> ");
+																scanf("%f",&tres.sub[0]);
+																printf("Subject Two marks ==> ");
+																scanf("%f",&tres.sub[1]);
+																printf("Subject Three marks ==> ");
+																scanf("%f",&tres.sub[2]);
+																printf("Subject Four marks ==> ");
+																scanf("%f",&tres.sub[3]);
+																printf("Subject Five marks ==> ");
+																scanf("%f",&tres.sub[4]);
+																
+																delete_stuacad(temp.inst_id, tres.stu_id);
+																
+																add_stuacad(temp.inst_id, tres);
+																
+																printf("\nWould you like to update roll no?\n1. NO & Save\t2. Yes & Save \n");
+																do{
+																	printf("\t==> ");
+																	scanf("%d",&inopt);
+																	if(inopt == 1){
+																		//no
+																		printf("\nData Saved and roll not updated!\n");
+																		Sleep(500);
+																		opt == 6;
+																		break;
+																		
+				
+																	}
+																	else if(inopt == 2){
+																		// yes
+																		printf("\nData Saved and Roll no Updated\n");
+																		update_rollno(temp.inst_id);
+																		opt == 6;
+																		Sleep(500);
+																		break;
+																	}
+																	else{
+																		//default
+																		printf("\ninvalid case, try again ");
+																	}
+																	
+																
+																}while(1 == 1);
+																
+															}
+															else{
+																printf("Error! Data for that ID doesn't Exist\n");
+																Sleep(500);
+																
+															}
+															
+														break;
+														
+														case 5:
+															//delete student
+															do{
+																system("cls");
+																printf("Select one deletion:-\n\t1. Delete and update roll no\n\t2. Only detete\n\t3.Exit/Back \n====> ");
+																scanf("%d",&opt);
+																if(opt == 1 || opt == 2){
+																	printf("Provide student id ==> ");
+																	scanf("%d",&id);
+																	check = check_isdata(temp.inst_id, PERS, id);
+																	if(check == 1){
+																		printf("\npersonal data found and deleted\n");
+																		delete_stupers(temp.inst_id, id);
+																		
+																	}
+																	else{
+																		printf("\nPersonal data for id not found!\n");
+																		
+																	}
+																	Sleep(500);
+																	check = check_isdata(temp.inst_id, ACAD, id);
+																	if(check == 1){
+																		printf("\nAcademic data found and deleted\n");
+																		delete_stuacad(temp.inst_id, id);
+																	}
+																	else{
+																		printf("\nAcademic data for id not found\n");
+																		
+																	}
+																	Sleep(500);
+																	if(opt == 1){
+																		printf("\nroll no updated \n");
+																		update_rollno(temp.inst_id);
+																		Sleep(500);
+																	}
+																	else{
+																		printf("\nroll no not updated\n");
+																	}
+																	Sleep(1500);
+																	opt = 3;
+																}
+																else if(opt == 3){
+																	printf("\nGetting Back.........\n");
+																	Sleep(500);
+																}
+																else{
+																	printf("\ninvalid try again!!\n ");
+																	Sleep(500);
+																}
+																
+															}while(opt != 3);
+															
+															
+															
+														break;
+														
+														case 6:
+															//back
+														break;
+														
+														default:
+															printf("this is invalid !!!\n");
+															Sleep(500);
+													}
+													
+													
+												}while(opt != 6);
+												
 											break;
 											
 											case 5:
