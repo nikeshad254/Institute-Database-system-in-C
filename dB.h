@@ -505,7 +505,7 @@ int delete_stupers(int Co_id, int Stu_id){
 				fprintf(fp,"%d %s %d %s %s %d %s %s %s %s %s %s %s %s %s\n", stu[i].stu_id, stu[i].pwd, stu[i].roll_no, stu[i].fname, stu[i].lname, stu[i].gender, stu[i].dob, stu[i].phone, stu[i].email, stu[i].address.per_prov, stu[i].address.per_dist, stu[i].address.per_street, stu[i].address.temp_prov, stu[i].address.temp_dist, stu[i].address.temp_street);
 			}
 		}
-	
+		fclose(fp);
 		ret = 1;
 	}
 	return ret;
