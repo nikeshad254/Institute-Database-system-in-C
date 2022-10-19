@@ -18,6 +18,7 @@ void access_one_institute(struct institute *arr, int id);
 void generate_path(int Co_id, int mode, char *gen_path );
 void fetch_stupers(int Co_id, struct student *arr);
 int add_stupers(int Co_id, struct student arr);
+int add_pers_with_id(int Co_id, struct student arr);
 void fetch_stuacad(int Co_id, struct result *arr);
 void add_stuacad(int Co_id, struct result marks);
 int fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
@@ -274,6 +275,27 @@ int add_stupers(int Co_id, struct student arr){
 	}
 	arr.stu_id = max + 3;
 	
+	strcpy(path,db);
+	strcat(path,name);
+	
+	fp = fopen(path, "a");
+	
+	strcpy(arr.pwd, arr.fname);
+	
+	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
+	
+	
+	fclose(fp);
+	
+	
+	return arr.stu_id;
+}
+
+int add_pers_with_id(int Co_id, struct student arr){
+	FILE *fp;
+	char name[300], path[300];
+//	strcpy(path, db);
+	generate_path(Co_id, PERS, name);	
 	strcpy(path,db);
 	strcat(path,name);
 	
