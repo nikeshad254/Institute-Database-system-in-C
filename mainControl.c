@@ -8,6 +8,8 @@ void main(){
 	struct institute temp;			//temporary data holder of institute (through out(permanent) after verification),
 	struct institute insta;			//data of one institute holder
 	struct student tstu;			//temporary student.
+	struct student tempS;			//temporary student user
+	struct result tempR;			//temporary result user
 	struct result tres;				//temporary result.
 	char name[300];
 	char gender[10];				//for gender confersion at displays.
@@ -20,6 +22,134 @@ void main(){
 		scanf("%d",&opt);
 		switch(opt){
 			case 1: // for user
+				check = 0;
+				do{
+					printf("Give Institute ID: ");
+					scanf("%d",&id);
+					check = check_isInstData(id);
+					if(check == 0){
+						printf("try again, wrong ID, ");
+					}
+					
+				}while(check == 0);
+				system("cls");
+				printf("Login to Your System in Company %d\n\n",id);
+				
+				chance = 0;
+				do{
+					
+					printf("Enter Student ID: ");
+					scanf("%d",&tempS.stu_id);
+					printf("Enter your Password: ");
+					scanf("%s",tempS.pwd);
+					if(check_StuPwd(id, tempS) == 0){
+						chance = chance + 1 ;
+						printf("invalid!!! \n\n");
+						if(chance == 3){
+							printf("Dont try to log in others account!! Contact instiute if password lost \n");
+							exit(0);
+						}
+					}
+					else if(check_StuPwd(id, tempS) == 1){
+						printf("\nSucessful Log in\n");
+						break;
+					}
+					
+				}while(1 == 1);
+				
+				do{		//tstu will run all over now;
+					fetch_one_stupers(id, tempS.stu_id, &tstu);
+					fetch_one_stuacad(id, tempS.stu_id, &tres);
+					
+					Sleep(500);
+					system("cls");
+					printf("-----------Welcome, %s %s to User Pannel--------------\n", tstu.fname, tstu.lname);
+					printf("Choose what to do: \n\t1. Show My Data\n\t2. View Result\n\t3. Change Password\n\t4. Exit\n=====> ");
+					scanf("%d",&opt);
+					switch(opt){
+						case 1:
+							//show my data (user)
+							system("cls");
+							printf("----------%s %s Data View Mode---------\n\n", tstu.fname, tstu.lname);
+							printf("Name: %s %s \nRoll No: %d \nStudent ID: %d\n", tstu.fname, tstu.lname, tstu.roll_no, tstu.stu_id);
+							if(tstu.gender == 1){
+								strcpy(gender, "Male");
+							}
+							else if(tstu.gender == 2){
+								strcpy(gender, "Female");
+							}
+							else{
+								strcpy(gender, "Not Found");
+							}
+							printf("Gender: %s\nDate of Birth : %s\nPhone: %s\nEmail: %s\n", gender, tstu.dob, tstu.phone, tstu.email);
+							printf("----------Permanent Address-----------\nProvinvce: %s\nDistrict: %s\nStreet/town: %s\n", tstu.address.per_prov, tstu.address.per_dist, tstu.address.per_street);
+							printf("----------Temporary Address-----------\nProvinvce: %s\nDistrict: %s\nStreet/town: %s\n", tstu.address.temp_prov, tstu.address.temp_dist, tstu.address.temp_street);
+																
+								
+							printf("\n\n Enter 1 to exit data view mode ");
+							do{
+								printf("===> ");
+								scanf("%d", &inopt);
+									if(inopt == 1){
+										printf("\n\n Exiting now ..........\n");
+										Sleep(500);
+										
+									}
+									else{
+										printf("invalid, try again ");
+									}				
+							}while(inopt != 1);
+
+						break;
+						
+						case 2:
+							//view latest result
+							system("cls");
+							check = check_isdata(id, ACAD, tstu.stu_id);
+							if(check == 1){
+								printf("--------------Academic Data-------------\n");
+								printf("Subject One : %f\nSubject Two : %f\nSubject Three : %f\nSubject Four : %f\nSubject Five : %f\n", tres.sub[0], tres.sub[1], tres.sub[2], tres.sub[3], tres.sub[4]);
+								printf("Total scored : %f", tres.sub[0] + tres.sub[1] + tres.sub[2] + tres.sub[3] + tres.sub[4]);
+								printf("\n\nPercentage : %f", tres.per);
+								printf("\nRank : %d", tstu.roll_no);
+								printf("\n\nnote: if all 0 data is not updated, if roll no is not change same case\n contact to your institute!\n");
+								printf("\n\nEnter 1 to Exit the data view mode now!!\n");
+								do{
+									printf("===> ");
+									scanf("%d", &inopt);
+									if(inopt == 1){
+										printf("\n\n Exiting now ..........\n");
+										Sleep(500);
+										
+									}
+									else{
+										printf("invalid, try again ");
+									}				
+								}while(inopt != 1);
+								
+							}
+							else{
+								printf("\n\nData not available yet!! \n");
+							}
+							
+						break;
+						
+						case 3:
+							//changing password
+						break;
+						
+						case 4:
+							printf("\nExiting now........\n");
+							Sleep(500);
+						break;
+						
+						default:
+							printf("Invalid Option !! \n");
+							Sleep(500);
+					}
+					
+				}while(opt != 4);
+				
 			
 			break;
 			
