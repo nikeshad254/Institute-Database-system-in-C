@@ -293,9 +293,11 @@ void main(){
 															scanf("%s",tstu.address.per_street);
 															
 															//id auto done from dB
-															//password auto done from dB
+															//password auto from here!!
+															strcpy(tstu.pwd, tstu.fname);
+															
 															verify = add_stupers(temp.inst_id, tstu);
-															printf("\n\nstudent id is ==> %d\n",verify);
+															printf("\n\nstudent id is ==> %d\n password = %s\n",verify, tstu.pwd);
 															Sleep(2000);
 															
 															do{
@@ -841,11 +843,12 @@ void main(){
 																printf("Last Name: ");
 																scanf("%s",tstu.lname);
 																
-																printf("previous roll no is as it is.. \n");
+																printf("previous roll no & Password is as it is.. \n");
 																for(i=0; i<data_no; i++){
 																	if(id == persdt[i].stu_id){
 																		tstu.roll_no = persdt[i].roll_no;
 																		printf("roll no = %d\n",tstu.roll_no);
+																		strcpy(tstu.pwd, persdt[i].pwd);
 																		break;
 																	}
 																}
@@ -913,11 +916,11 @@ void main(){
 																printf("Last Name: ");
 																scanf("%s",tstu.lname);
 																
-																printf("previous roll no is as it is.. \n");
+																printf("previous roll no & password is as it is.. \n");
 																for(i=0; i<data_no; i++){
 																	if(id == persdts[i].stu_id){
 																		tstu.roll_no = persdts[i].roll_no;
-																		
+																		strcpy(tstu.pwd, persdts[i].pwd);
 																		break;
 																	}
 																}
