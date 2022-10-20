@@ -25,6 +25,7 @@ void add_stuacad(int Co_id, struct result marks);
 int fetch_one_stupers(int Co_id, int stu_id, struct student *stu);
 int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu);
 int check_isdata(int Co_id, int mode, int stu_id);
+int check_StuPwd(int Co_id, struct student stu);
 int delete_stuacad(int Co_id, int Stu_id);
 int delete_stupers(int Co_id, int Stu_id);
 int update_rollno(int Co_id);
@@ -446,7 +447,22 @@ int fetch_one_stuacad(int Co_id, int stu_id, struct result *stu){
 	}
 	return 0;
 }
-
+int check_StuPwd(int Co_id, struct student stu){
+	char name[300];
+	int i, data_no, j;
+	generate_path(Co_id, PERS, name);
+	data_no = data_count(name);
+	struct student arr[data_no];
+	fetch_stupers(Co_id, arr);
+	
+	for(i=0; i<data_no; i++){
+		
+		if(stu.stu_id == arr[i].stu_id && strcmp(arr[i].pwd, stu.pwd) == 0){
+			return 1;
+		}
+	}
+	return 0;
+}
 int check_isdata(int Co_id, int mode, int stu_id){
 	char name[300];
 	int i, data_no;
