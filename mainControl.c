@@ -13,6 +13,7 @@ void main(){
 	struct result tres;				//temporary result.
 	char name[300];
 	char gender[10];				//for gender confersion at displays.
+	char tString[100];				//temporary string holder.
 	
 	do{
 		Sleep(500);
@@ -136,6 +137,28 @@ void main(){
 						
 						case 3:
 							//changing password
+							system("cls");
+							printf("Old Password:- ");
+							scanf("%s",tempS.pwd);
+							if(strcmp(tempS.pwd, tstu.pwd) == 0){
+								printf("Provide New Password:- ");
+								scanf("%s", tstu.pwd);
+								
+								delete_stupers(id, tstu.stu_id);
+								
+								Sleep(500);
+								
+								add_pers_with_id(id, tstu);
+								
+								printf("\nPassword Changed! Please log in again! \n");
+								opt = 4;
+								
+							}
+							else{
+								printf("\nIncorrect, You are not allowed to be here!!\n");
+								exit(0);
+							}
+							
 						break;
 						
 						case 4:
