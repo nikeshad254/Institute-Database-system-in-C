@@ -8,6 +8,7 @@ char c_data[] = "c_datas/";
 
 
 //function declarartion
+int check_file();
 int data_count(char file_name[]);
 int fetch_passcode();
 int create_institute(char name[], char pass[]);
@@ -29,6 +30,53 @@ int check_StuPwd(int Co_id, struct student stu);
 int delete_stuacad(int Co_id, int Stu_id);
 int delete_stupers(int Co_id, int Stu_id);
 int update_rollno(int Co_id);
+
+
+
+int check_file(){
+	char path[100], admin[100], inner[100];
+	int code = 121;
+
+	strcpy(path,db);
+	strcat(path, c_data);
+	
+	strcpy(admin, db);
+	strcat(admin, admin_code);
+
+	strcpy(inner, path);
+	strcat(inner, "checker.txt");
+	
+	FILE *fp;
+	FILE *fp1;
+	fp = fopen(inner, "r");
+	if(fp == NULL){
+		
+		mkdir(db);
+		mkdir(path);
+		fclose(fp);
+		
+		fp = fopen(inner, "w");
+		fprintf(fp, "just opening!!");
+		fclose(fp);
+		Sleep(50);
+		fp1 = fopen(admin, "w");
+		fprintf(fp1,"%d", code);
+		fclose(fp1);
+		
+		printf("..... All needed files and dir created ...... \n");
+		return 0;
+
+	}
+	else{
+		printf("........All Ready to Go!!...........\n");
+		return 1;
+		fclose(fp);
+
+	}
+
+	Sleep(500);
+	return 1;
+}
 
 // counts number of data from any file
 int data_count(char file_name[]){		//working
@@ -64,8 +112,8 @@ int fetch_passcode(){
 	FILE *fp;
 	fp = fopen(path,"r");
 	if(fp==NULL){
-		printf("\n\t...Error Ouccured...");
-		exit(0);
+		return 0;
+		
 	}
 	fscanf(fp,"%d",&pass);
 	fclose(fp);

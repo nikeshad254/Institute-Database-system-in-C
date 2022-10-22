@@ -15,7 +15,12 @@ void main(){
 	char gender[10];				//for gender confersion at displays.
 	char tString[100];				//temporary string holder.
 	
+//code starts here!!
+
+	check_file();		//gens file & admin code of 121 one time only!!
 	do{
+		
+		
 		Sleep(500);
 		system("cls");
 		printf("\tWelcome to Institute Database\n...............................................\n");
