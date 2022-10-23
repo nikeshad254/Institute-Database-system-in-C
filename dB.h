@@ -120,29 +120,81 @@ int fetch_passcode(){
 	return pass;
 }
 
-
-int create_institute(char name[], char pass[]){
-	int id, data_no;
-	
-	//this code is imp for fetching infos
-	data_no = data_count(inst_file);
-	struct institute insta[data_no];
-	fetch_institute(insta);
-//testing=>	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[3].name);
+int check_instfile(){
 	
 	FILE *fp;
-	
 	char path[300];
+	
 	strcpy(path,db);
 	strcat(path,inst_file);		
-	fp = fopen(path,"a");
+	fp = fopen(path,"r");
+	if(fp == NULL){
+		//dummy file create.
+		fclose(fp);
+		
+		fp = fopen(path, "w");
+		fprintf(fp, "");
+		fclose(fp);
+		
+		return 0;
+	}
+	else{
+		//file already exist.
+		fclose(fp);
+		return 1;
+	}
 	
-	id = data_no - 1;
-	id = insta[id].inst_id + 2;
+}
+
+int create_institute(char name[], char pass[]){
+	int id, data_no, a;
+	FILE *fp;
+	char path[300];
 	
-	fprintf(fp,"%d %s %s\n", id, name, pass);
+	a = check_instfile();
+	if(a == 1){
+		strcpy(path,db);
+		strcat(path,inst_file);		
 	
-	fclose(fp);
+		//this code is imp for fetching infos
+		data_no = data_count(inst_file);
+		struct institute insta[data_no];
+		fetch_institute(insta);
+		//testing=>	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[3].name);
+		
+		fp = fopen(path,"a");
+		if(fp == NULL){
+			
+			printf("error file not found!");
+		}
+		id = data_no - 1;
+		id = insta[id].inst_id + 2;
+			
+		fprintf(fp,"%d %s %s\n", id, name, pass);
+			
+		fclose(fp);
+	}
+	else if(a == 0){
+		strcpy(path,db);
+		strcat(path,inst_file);		
+	
+		//this code is imp for fetching infos
+		data_no = data_count(inst_file);
+		struct institute insta[data_no];
+		fetch_institute(insta);
+		//testing=>	printf("%s %s %s %s ",insta[0].name,insta[1].pass,insta[2].name, insta[3].name);
+		
+		fp = fopen(path,"a");
+		if(fp == NULL){
+			
+			printf("error file not found!");
+		}
+		id = 101;
+			
+		fprintf(fp,"%d %s %s\n", id, name, pass);
+			
+		fclose(fp);
+	}
 	
 	return id;
 	
