@@ -326,14 +326,28 @@ int check_isInstData(int id){
 int delete_institute(int id){
 	
 	int data_no, i;
+	char name[300], path[300];
 	//this code is imp for fetching infos
+	
+		//delete pers
+	generate_path(id, PERS, name);
+	strcpy(path, db);
+	strcat(path, name);
+	remove(path);
+	
+	//delete acad
+	generate_path(id, ACAD, name);
+	strcpy(path, db);
+	strcat(path, name);
+	remove(path);
+	
 		
 	data_no = data_count(inst_file);
 	
 	struct institute insta[data_no];
 	fetch_institute(insta);
 	
-	char path[300];
+
 	strcpy(path,db);
 	strcat(path,inst_file);
 	
@@ -347,7 +361,7 @@ int delete_institute(int id){
 		}
 	}
 	fclose(fp);
-	
+
 	return 1;
 }
 
