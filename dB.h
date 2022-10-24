@@ -9,6 +9,7 @@ char c_data[] = "c_datas/";
 
 //function declarartion
 int check_file();
+int check_instfile();
 int data_count(char file_name[]);
 int fetch_passcode();
 int create_institute(char name[], char pass[]);
@@ -145,6 +146,49 @@ int check_instfile(){
 	}
 	
 }
+int check_persacad(int Co_id){
+	FILE *fp;
+	char path[300], name[300];
+	
+	strcpy(path,db);
+	
+	generate_path(Co_id, PERS, name);
+	strcat(path, name);
+	
+	fp = fopen(path, "r");
+	if(fp == NULL){
+		fclose(fp);
+		
+		fp = fopen(path, "w");
+		fprintf(fp,"");
+		
+		fclose(fp);
+		
+		generate_path(Co_id, ACAD, name);
+		strcpy(path, db);
+		strcat(path, name);
+		
+		fp = fopen(path, "r");
+		if(fp == NULL){
+			fclose(fp);
+			
+			fp = fopen(path, "w");
+			fprintf(fp, "");
+			fclose(fp);
+		}
+		else{
+			fclose(fp);
+		}
+			
+		return 0;
+	}
+	else{
+		fclose(fp);
+		return 1;
+	}
+	
+	
+}
 
 int create_institute(char name[], char pass[]){
 	int id, data_no, a;
@@ -167,10 +211,18 @@ int create_institute(char name[], char pass[]){
 			
 			printf("error file not found!");
 		}
-		id = data_no - 1;
-		id = insta[id].inst_id + 2;
-			
-		fprintf(fp,"%d %s %s\n", id, name, pass);
+		
+		
+		if(data_no == 0){
+			id = 100 + 2;
+			fprintf(fp,"%d %s %s\n", id, name, pass);
+		}
+		else{
+			id = data_no - 1;
+			id = insta[id].inst_id + 2;
+			fprintf(fp,"%d %s %s\n", id, name, pass);
+		}
+		
 			
 		fclose(fp);
 	}
@@ -241,11 +293,9 @@ int check_institute(int id, char pass[]){
 
 	for(i=0; i < data_no; i++){
 //		printf("%d %s %s \n",insta[i].inst_id, insta[i].name, insta[i].pass);
-		
 		if( insta[i].inst_id == id && strcmp(insta[i].pass, pass) == 0){
-			return i;
+			return 1;
 		}
-
 	}
 	return 0;
 }
@@ -311,6 +361,7 @@ void access_one_institute(struct institute *arr, int id){
 	fetch_institute(insta);
 	
 	for( i=0; i<data_no; i++){
+
 		if(insta[i].inst_id == id){
 			
 			arr->inst_id = insta[i].inst_id;
@@ -321,7 +372,7 @@ void access_one_institute(struct institute *arr, int id){
 			return;
 		}
 	}
-	printf("error occured!!");
+	printf("...error occured!!...");
 	exit(0);
 }
 
@@ -372,15 +423,18 @@ void fetch_stupers(int Co_id, struct student *arr){
 		exit(0);
 	}
 	
+
 	for(i=0; i<data_no; i++){
 		fscanf(fp, "%d %s %d %s %s %d %s %s %s %s %s %s %s %s %s\n", &arr->stu_id, arr->pwd, &arr->roll_no, arr->fname, arr->lname, &arr->gender, arr->dob, arr->phone, arr->email, arr->address.per_prov, arr->address.per_dist, arr->address.per_street, arr->address.temp_prov, arr->address.temp_dist, arr->address.temp_street);
 		arr++;
 	}
-	
+
+
 	fclose(fp);
 	
 	
-}
+} 
+
 int add_stupers(int Co_id, struct student arr){
 	FILE *fp;
 	char name[300], path[300];
@@ -389,26 +443,32 @@ int add_stupers(int Co_id, struct student arr){
 	generate_path(Co_id, PERS, name);	
 	int data_no = data_count(name);
 	
-	struct student stu[data_no];
-	fetch_stupers(Co_id, stu);
-	
-	for(i=0; i<data_no; i++){
-		if(max < stu[i].stu_id){
-			max = stu[i].stu_id;
+	if(data_no != 0){
+		struct student stu[data_no];
+		fetch_stupers(Co_id, stu);
+		
+		for(i=0; i<data_no; i++){
+			if(max < stu[i].stu_id){
+				max = stu[i].stu_id;
+			}
 		}
+		arr.stu_id = max + 3;
 	}
-	arr.stu_id = max + 3;
+	else{
+		printf("data 0\n\n");
+		
+		arr.stu_id = 101;
+	}
+		
+		strcpy(path,db);
+		strcat(path,name);
+		
+		fp = fopen(path, "a");
 	
-	strcpy(path,db);
-	strcat(path,name);
-	
-	fp = fopen(path, "a");
-
-	fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
-	
-	
-	fclose(fp);
-	
+		fprintf(fp,"%d %s %d %s %s %d %s %d %s %s %s %s %s %s %s\n", arr.stu_id, arr.pwd, arr.roll_no, arr.fname, arr.lname, arr.gender, arr.dob, arr.phone, arr.email, arr.address.per_prov, arr.address.per_dist, arr.address.per_street, arr.address.temp_prov, arr.address.temp_dist, arr.address.temp_street);
+		
+		
+		fclose(fp);
 	
 	return arr.stu_id;
 }
